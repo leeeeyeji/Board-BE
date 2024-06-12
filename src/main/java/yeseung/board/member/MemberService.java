@@ -3,6 +3,7 @@ package yeseung.board.member;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import yeseung.board.member.dto.LoginForm;
 import yeseung.board.member.dto.MemberForm;
 
 @Slf4j
@@ -21,5 +22,16 @@ public class MemberService {
 
         memberRepository.save(member);
         return "유저 생성 완료";
+    }
+
+    public boolean login(String email,String password){
+        Member member = memberRepository.findByEmail(email)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 유저"));
+
+        if (member.getPassword().equals(password)){
+            return true;
+        }else {
+            return false;
+        }
     }
 }

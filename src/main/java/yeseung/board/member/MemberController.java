@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RestController;
+import yeseung.board.member.dto.LoginForm;
 import yeseung.board.member.dto.MemberForm;
 
 @Slf4j
@@ -24,4 +25,11 @@ public class MemberController {
        String result =  memberService.createMember(form);
        return ResponseEntity.ok(true);
     }
+
+    /*@PostMapping("/login")
+    public ResponseEntity<String> login(@RequestBody LoginForm form){
+        String result = memberService.login(form);
+
+        return ResponseEntity.ok(result);
+    }*/
 }

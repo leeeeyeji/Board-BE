@@ -1,7 +1,9 @@
 package yeseung.board.post;
 
 import jakarta.persistence.*;
+import lombok.Builder;
 import lombok.Getter;
+import lombok.NoArgsConstructor;
 import yeseung.board.comment.Comment;
 import yeseung.board.member.Member;
 
@@ -11,6 +13,7 @@ import java.util.List;
 
 @Entity
 @Getter
+@NoArgsConstructor
 public class Post {
 
     @Id
@@ -31,4 +34,19 @@ public class Post {
 
     @OneToMany(mappedBy = "post" , cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Comment> commentList = new ArrayList<>();
+
+    @Builder
+    public Post(String title, String content, Member member) {
+        this.title = title;
+        this.content = content;
+        this.member = member;
+    }
+
+    public void updateTitle(String title) {
+        this.title = title;
+    }
+
+    public void updateContent(String content) {
+        this.content = content;
+    }
 }
