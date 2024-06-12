@@ -19,9 +19,9 @@ public class MemberController {
     private final MemberService memberService;
 
     @PostMapping("/register")
-    public ResponseEntity<String> createMember(@RequestBody MemberForm form) {
+    public ResponseEntity<Boolean> createMember(@RequestBody MemberForm form) {
 
        String result =  memberService.createMember(form);
-       return ResponseEntity.ok(result);
+       return ResponseEntity.ok(true);
     }
 }
