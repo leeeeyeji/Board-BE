@@ -2,8 +2,11 @@ package yeseung.board.member;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import yeseung.board.post.Post;
 
 import java.time.LocalDateTime;
+import java.util.ArrayList;
+import java.util.List;
 
 @Entity
 @Getter
@@ -23,4 +26,7 @@ public class Member {
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
+    private List<Post> postList = new ArrayList<>();
 }

@@ -2,6 +2,7 @@ package yeseung.board.post;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import yeseung.board.member.Member;
 
 import java.time.LocalDateTime;
 
@@ -20,4 +21,8 @@ public class Post {
 
     @Column(nullable = false)
     private LocalDateTime createdAt = LocalDateTime.now();
+
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "member_id")
+    private Member member;
 }
