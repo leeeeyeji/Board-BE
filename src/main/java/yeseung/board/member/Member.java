@@ -2,6 +2,7 @@ package yeseung.board.member;
 
 import jakarta.persistence.*;
 import lombok.Getter;
+import yeseung.board.comment.Comment;
 import yeseung.board.post.Post;
 
 import java.time.LocalDateTime;
@@ -29,4 +30,7 @@ public class Member {
 
     @OneToMany(mappedBy = "member", cascade = CascadeType.ALL, orphanRemoval = true)
     private List<Post> postList = new ArrayList<>();
+
+    @OneToMany(mappedBy = "member",cascade = CascadeType.ALL,orphanRemoval = true)
+    private List<Comment> commentList = new ArrayList<>();
 }
