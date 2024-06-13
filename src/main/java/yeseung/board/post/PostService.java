@@ -58,7 +58,15 @@ public class PostService {
         post.updateTitle(form.getTitle());
         post.updateContent(form.getContent());
 
+        postRepository.save(post);
+
         return "수정성공";
+    }
+
+    public String deletePost(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("존재하지않는 게시글"));
+        postRepository.delete(post);
     }
 }
 
