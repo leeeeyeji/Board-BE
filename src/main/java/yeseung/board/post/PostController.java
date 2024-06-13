@@ -1,10 +1,15 @@
 package yeseung.board.post;
 
+import lombok.Getter;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
+import yeseung.board.post.dto.PostDetailDto;
+import yeseung.board.post.dto.PostDto;
 import yeseung.board.post.dto.PostForm;
+
+import java.util.List;
 
 @Slf4j
 @RestController
@@ -34,6 +39,19 @@ public class PostController {
         return ResponseEntity.ok(result);
     }
 
-    //변경사항
+    //모든 게시글 조회
+    @GetMapping
+    public ResponseEntity<List<PostDto>> getAllPosts() {
+        List<PostDto> allPosts = postService.getAllPosts();
+        return ResponseEntity.ok(allPosts);
+    }
+
+    //게시글 상세 조회(댓글 미구현)
+    @GetMapping("/{postId}")
+    public ResponseEntity<PostDetailDto> getPostDetail(@PathVariable Long postId) {
+        PostDetailDto postDetail = postService.getPostDetail(postId);
+
+        return ResponseEntity.ok(postDetail);
+    }
 
 }

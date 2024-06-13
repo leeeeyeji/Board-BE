@@ -6,8 +6,12 @@ import org.springframework.stereotype.Service;
 import yeseung.board.member.Member;
 import yeseung.board.member.MemberRepository;
 import yeseung.board.member.MemberService;
+import yeseung.board.post.dto.PostDetailDto;
 import yeseung.board.post.dto.PostDto;
 import yeseung.board.post.dto.PostForm;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -65,8 +69,30 @@ public class PostService {
 
     public String deletePost(Long postId) {
         Post post = postRepository.findById(postId)
-                .orElseThrow(() -> new RuntimeException("존재하지않는 게시글"));
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 게시글"));
         postRepository.delete(post);
+
+        return "삭제 완료";
+    }
+
+    public List<PostDto> getAllPosts() {
+        List<Post> allPosts = postRepository.findAll();
+        return allPosts.stream().map(post -> new PostDto(
+                post.getPostId(),
+                post.getTitle(),
+                post.getMember().getUsername()
+        )).collect(Collectors.toList());
+    }
+
+
+    public PostDetailDto getPostDetail(Long postId) {
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 게시글"));
+        return PostDetailDto.builder()
+                .title(post.getTitle())
+                .author(post.getMember().getUsername())
+                .content(post.getContent())
+                .build();
     }
 }
 
