@@ -7,8 +7,8 @@ import lombok.Data;
 @Data
 @Builder
 @AllArgsConstructor
-public class PostDto {
-    private Long postId;
+public class PostDetailDto {
     private String title;
     private String author;
+    private String content;
 }
