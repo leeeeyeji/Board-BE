@@ -3,11 +3,16 @@ package yeseung.board.comment;
 import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.PathVariable;
+import yeseung.board.comment.dto.CommentDto;
 import yeseung.board.comment.dto.CommentForm;
 import yeseung.board.member.Member;
 import yeseung.board.member.MemberRepository;
 import yeseung.board.post.Post;
 import yeseung.board.post.PostRepository;
+
+import java.util.List;
+import java.util.stream.Collectors;
 
 @Service
 @Slf4j
@@ -47,7 +52,24 @@ public class CommentService {
         return "댓글 저장 완료";
     }
 
+    public List<CommentDto> getAllComments(@PathVariable Long postId){
+        Post post = postRepository.findById(postId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 게시글"));
+        List<Comment> allComments = commentRepository.findAllByPost(post);
 
+        return allComments.stream().map(comment -> new CommentDto(
+                comment.getCommentId(),
+                comment.getContent(),
+                comment.getMember().getUsername()
+        )).collect(Collectors.toList());
+    }
 
+    public String deleteComment(Long commentId){
+        Comment comment = commentRepository.findById(commentId)
+                .orElseThrow(() -> new RuntimeException("존재하지 않는 댓글"));
+        commentRepository.delete(comment);
+
+        return "댓글 삭제 완료";
+    }
 
 }

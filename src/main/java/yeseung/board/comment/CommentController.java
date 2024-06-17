@@ -4,11 +4,11 @@ import lombok.RequiredArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
+import yeseung.board.comment.dto.CommentDto;
 import yeseung.board.comment.dto.CommentForm;
+
+import java.util.List;
 
 @Controller
 @Slf4j
@@ -22,6 +22,18 @@ public class CommentController {
     public ResponseEntity<String> createComment(@RequestBody CommentForm form, @PathVariable Long postId){
         String result = commentService.createComment(form,postId);
 
+        return ResponseEntity.ok(result);
+    }
+
+    @GetMapping
+    public ResponseEntity<List<CommentDto>> getAllComments(@PathVariable Long postId){
+        List<CommentDto> allComments = commentService.getAllComments(postId);
+        return ResponseEntity.ok(allComments);
+    }
+
+    @DeleteMapping("/{commentId}")
+    public ResponseEntity<String> deleteComment(@PathVariable Long commentId){
+        String result = commentService.deleteComment(commentId);
         return ResponseEntity.ok(result);
     }
 }
